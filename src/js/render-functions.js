@@ -2,21 +2,21 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryContainer = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.load-more');
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
 
-// @param { Array } images
-
 export function createGallery(images) {
   const markup = images
-    .map(image => {
-      return `
+    .map(
+      image => `
     <li class="gallery-item">
       <a href="${image.largeImageURL}">
-        <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+        <img src="${image.webformatURL}" alt="${image.tags}" />
       </a>
       <div class="info">
         <div class="info-item">
@@ -37,8 +37,8 @@ export function createGallery(images) {
         </div>
       </div>
     </li>
-    `;
-    })
+  `
+    )
     .join('');
 
   galleryContainer.insertAdjacentHTML('beforeend', markup);
@@ -50,15 +50,17 @@ export function clearGallery() {
 }
 
 export function showLoader() {
-  document.querySelector('.loader').classList.add('visible');
+  loader.classList.add('visible');
 }
 
-// export function hideLoader() {
-//   document.querySelector('.loader').classList.remove('visible');
-// }
-
 export function hideLoader() {
-  setTimeout(() => {
-    document.querySelector('.loader').classList.remove('visible');
-  }, 700);
+  setTimeout(() => loader.classList.remove('visible'), 700);
+}
+
+export function showLoadMoreButton() {
+  loadMoreBtn.style.display = 'block';
+}
+
+export function hideLoadMoreButton() {
+  loadMoreBtn.style.display = 'none';
 }
